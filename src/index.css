@@ -12,6 +12,7 @@ body{
 }
 #root{
   height: 100%;
+  background-color: #202129;
 }
 /* navigation top */
 .navigation_top{

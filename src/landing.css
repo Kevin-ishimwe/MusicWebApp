@@ -1,0 +1,16 @@
+.login_spotify_btn_cont{
+    margin-top: 25%;
+    margin-left: 20%;
+    display: flex;
+    justify-content: center;
+    padding: .5%;
+    width: 20%;
+    background-color: rgb(31, 150, 53);
+    border-radius: 10px;
+}
+.authentication_link{
+    text-decoration: none;
+    font-size: x-large;
+    font-family: 'PT Sans Narrow',sans-serif;
+    color: white;
+}
