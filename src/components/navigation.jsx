@@ -37,18 +37,18 @@ function Navigation() {
               <i class="fa fa-search" id="search" onClick={searchHandeler}></i>
             </li>
           </ul>
-        </div>
-
-        <div id="navigation_top_right">
-          <i className="fas fa-bars" id="menu_bars"></i>
-          <div className="nav_right_toggle">
-            <i className="far fa-envelope" id="nav_top_right_icons"></i>
-            <i className="fas fa-shopping-cart" id="nav_top_right_icons"></i>
-            <a className="mid_links">LOGIN</a>
-            <i className="fas fa-plus-square" id="nav_top_right_icons"></i>
+          <div id="navigation_top_right">
+            <i className="fas fa-bars" id="menu_bars"></i>
+            <div className="nav_right_toggle">
+              <i className="far fa-envelope" id="nav_top_right_icons"></i>
+              <i className="fas fa-shopping-cart" id="nav_top_right_icons"></i>
+              <a className="mid_link_log">LOGIN</a>
+              <i className="fas fa-plus-square" id="nav_top_right_icons"></i>
+            </div>
           </div>
         </div>
       </div>
+
       {/* side navigation bar */}
       <div className="side_navigation">
         <ul className="nav_side_ul">

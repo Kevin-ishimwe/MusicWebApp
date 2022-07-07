@@ -1,23 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Orbitron&family=PT+Sans+Narrow&family=Poppins:wght@200&family=Roboto:wght@100&family=Source+Sans+Pro:wght@200&family=Splash&display=swap');
 
+html{
+  height: 100%;
+}
 /*body coloring*/
 body{
  padding: 0%;
   margin: 0%;
+  height: 100%;
   background-color: #202129;
+}
+#root{
+  height: 100%;
 }
 /* navigation top */
 .navigation_top{
   position: fixed;
   width: 100%;
-  display: grid;
+  display: flex;
   height: 55px;
-  min-width: 700px;
-  grid-template-columns: 15% 50% 15%;
-  justify-content: space-between;
   border-bottom: 1px solid rgb(255, 0, 183);
   box-shadow: .5px .5px 4px rgb(144, 38, 0);
-  overflow: hidden;
 }
 /*content left -mid -right*/
 .navigation_top_left{
@@ -25,13 +28,17 @@ body{
   margin: 0%;
   min-width: 180px;
   display: flex;
+  width: 14.88%;
   justify-content: left;
   border-right: 1px solid rgb(255, 0, 183);
 }
   #logo{
   
-    border: solid inherit;
     margin-top: 0%;
+  }
+  .test{
+    margin: 20%;
+    position: absolute;
   }
 .nav_top_left_header{
     margin: 0%;
@@ -53,20 +60,22 @@ body{
 }
 #search{
   color: azure;
+  display: inline;
+  margin: 2%;
 }
 #top_input1{
   display: none;
 }
 #top_input2{
   width: 25%;
-  padding: .5%;
+  padding: .7%;
   padding-left: 2%;
   font-size: small;
   border-radius: 50px;
   color: black;
   border: none;
   background-color: azure;
-  animation: sizen 2s 1;
+  animation: sizen 0.5s 1;
 }
 @keyframes sizen {
   from{width: 0%;}
@@ -74,24 +83,42 @@ body{
   
 }
 .nav_mid_ul{
-  margin-top: 1%;
+  margin-top: 0.5%;
+  width: 80%;
+
+
 }
 .navigation_top_middle{
   padding: 0%;
+  display: flex;
+  justify-content: space-between;
+  width: 85%;
 }
 #navigation_top_right{
-  margin-top: 5%;
+  margin-top: 0.5%;
+  margin-right: 5%;
+  
+}
+.nav_right_toggle{
+  display: flex;
 }
 #nav_top_right_icons{
   padding-right: 5%;
-  margin-top: 2%;
-  margin-right: 5%;
+  margin-top: 7%;
+  margin-right: 3%;
   color: azure;
   font-size: larger;
 }
+
 #menu_bars{
  display: none;
 } 
+.mid_link_log{
+  color: azure;
+  margin: 2%;
+  margin-top: 3%;
+  font-family: 'PT Sans Narrow';
+}
 /*side bar navigation*/
 .side_navigation{
   margin-top: 55px;
