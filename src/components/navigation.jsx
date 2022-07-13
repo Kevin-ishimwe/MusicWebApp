@@ -1,13 +1,64 @@
 import React from "react";
+import axios from "axios";
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "./logo.png.png";
 import { useState } from "react";
 function Navigation() {
-  //search handle
-  const [input, setinput] = useState("top_input1");
-  function searchHandeler() {
-    setinput("top_input2");
+  const [searchresults, setsearchresults] = useState([]);
+  const [token, settoken] = useState("");
+  const [search_display, setsearch_display] = useState("no");
+  useEffect(() => {
+    const hash = window.location.hash;
+    let token = window.localStorage.getItem("token");
+    if (!token && hash) {
+      token = hash
+        .substring(1)
+        .split("&")
+        .find((elem) => elem.startsWith("access_token"))
+        .split("=")[1];
+    }
+    settoken(token);
+  }, []);
+
+  localStorage.setItem("token", token);
+  //search theme button
+  const [input, setinput] = useState("top_input2");
+  //search keyword getter
+  const [searchkeyword, setsearchkeyword] = useState("");
+  const searchkeywordgetter = (e) => {
+    e.preventDefault();
+    setsearchkeyword(e.target.value);
+  };
+  //search handler
+
+  const search_artist = async (e) => {
+    e.preventDefault();
+    const data = await axios.get("https://api.spotify.com/v1/search", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        q: searchkeyword,
+        type: "artist",
+        limit: 7,
+      },
+    });
+    console.log(data, "sdfadfasfa/////////////////////////////////////");
+
+    setsearchresults(data.data.artists.items);
+    setsearch_display("yes");
+    console.log();
+  };
+
+  var link_array = [];
+  if (searchresults.length >= 3) {
+    console.log(searchresults.length);
+    for (let i = 0; 3 > i; i++) {
+      link_array.push(searchresults[i].images[i].url);
+    }
   }
+  console.log(link_array);
 
   return (
     <div>
@@ -31,10 +82,11 @@ function Navigation() {
             <li className="nav_mid_li">
               <input
                 type="text"
-                placeholder="Artist,track or podcast"
+                placeholder="search Artist,track or podcast"
                 id={input}
+                onInput={searchkeywordgetter}
               ></input>
-              <i class="fa fa-search" id="search" onClick={searchHandeler}></i>
+              <i class="fa fa-search" id="search" onClick={search_artist}></i>
             </li>
           </ul>
           <div id="navigation_top_right">
@@ -48,7 +100,6 @@ function Navigation() {
           </div>
         </div>
       </div>
-
       {/* side navigation bar */}
       <div className="side_navigation">
         <ul className="nav_side_ul">
@@ -89,6 +140,19 @@ function Navigation() {
           />
           <h3 className="songtitle">song title</h3>
         </div>
+      </div>
+      <div className="results">
+        {searchresults.map(({ images }) => {
+          console.log(searchresults);
+          return (
+            <img
+              src={images[0].url}
+              alt={images[0].url}
+              height="200px"
+              width="200px"
+            />
+          );
+        })}
       </div>
     </div>
   );
