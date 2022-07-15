@@ -7,11 +7,12 @@ html{
 body{
  padding: 0%;
   margin: 0%;
-  height: 100%;
   background-color: #202129;
 }
 #root{
   background-color: #202129;
+  height: 100%;
+
 }
 /* navigation top */
 .navigation_top{
@@ -171,8 +172,13 @@ body{
   grid-template-columns: 30% 30% 30%;
   justify-content: space-between;
 }
-
-
+h3,h4{
+  color: white;
+}
+.search_item{
+  background-color: #191a20;
+  width: fit-content;
+}
 
 /* media queries for responsiveness tablets
 -tablets 900- */

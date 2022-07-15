@@ -7,7 +7,7 @@ import { useState } from "react";
 function Navigation() {
   const [searchresults, setsearchresults] = useState([]);
   const [token, settoken] = useState("");
-  const [search_display, setsearch_display] = useState("no");
+
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
@@ -41,24 +41,15 @@ function Navigation() {
       params: {
         q: searchkeyword,
         type: "artist",
-        limit: 7,
+        limit: 15,
+        market: "ES",
+        oofset: 1,
       },
     });
     console.log(data, "sdfadfasfa/////////////////////////////////////");
 
     setsearchresults(data.data.artists.items);
-    setsearch_display("yes");
-    console.log();
   };
-
-  var link_array = [];
-  if (searchresults.length >= 3) {
-    console.log(searchresults.length);
-    for (let i = 0; 3 > i; i++) {
-      link_array.push(searchresults[i].images[i].url);
-    }
-  }
-  console.log(link_array);
 
   return (
     <div>
@@ -142,17 +133,42 @@ function Navigation() {
         </div>
       </div>
       <div className="results">
-        {searchresults.map(({ images }) => {
-          console.log(searchresults);
-          return (
-            <img
-              src={images[0].url}
-              alt={images[0].url}
-              height="200px"
-              width="200px"
-            />
-          );
-        })}
+        {searchresults.length === 0 ? (
+          <h3>no results</h3>
+        ) : (
+          searchresults.map(({ images, name }) => {
+            // for no results
+            console.log(images);
+            if (images[1]) {
+              return (
+                <div className="search_item">
+                  <img
+                    src={images[1].url}
+                    alt="search results"
+                    height="200px"
+                    width="200px"
+                  />
+                  <h4>{name}</h4>
+                </div>
+              );
+            } else {
+              return <h3>noresults found</h3>;
+            }
+          })
+        )}
+      </div>
+
+      <div className="homepage_defult">
+        {/* <img
+          src="https://i.scdn.co/image/ab6761610000e5eb0f3bcc7b3d23e7cbece03012"
+          width="200px"
+          height="180px"
+        />
+        <img
+          src="https://i.scdn.co/image/ab6761610000517423c1d2fac850d037709ff548"
+          width="200px"
+          height="180px"
+        /> */}
       </div>
     </div>
   );
