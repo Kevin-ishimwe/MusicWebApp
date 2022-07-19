@@ -134,6 +134,10 @@ body{
   margin-top: 0%;
 
 }
+.main_slide{
+  border: solid white;
+  padding: 10px;
+}
 .nav_side_li{
   list-style: none;
   color: azure;
@@ -168,18 +172,44 @@ body{
   margin-left: 20%;
   position: absolute;
   margin-top: 65px;
-  display: grid;
-  grid-template-columns: 30% 30% 30%;
+  display: flex;
+  overflow-x: scroll;
+  padding: 10px;
+  border: 3px double whitesmoke;
+  width: 80vh;
+  min-width: 690px;
   justify-content: space-between;
 }
 h3,h4{
   color: white;
 }
 .search_item{
+  padding: 3%;
+  margin: 2%;
   background-color: #191a20;
   width: fit-content;
 }
+.search_item:hover{
+  background-color: rgb(70, 64, 64);
+}
+.albums{
 
+    margin-left: 20%;
+    position: absolute;
+    margin-top: 35%;
+    display: flex;
+    overflow-x: scroll;
+    padding: 10px;
+    border: 3px double whitesmoke;
+    width: 100vh;
+    min-width: 690px;
+    justify-content: space-between;
+  
+}
+.album_b0x{
+  margin: 2%;
+  
+}
 /* media queries for responsiveness tablets
 -tablets 900- */
  @media screen and (max-width:900px) {

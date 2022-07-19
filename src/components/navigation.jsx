@@ -4,10 +4,15 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "./logo.png.png";
 import { useState } from "react";
+import SpotifyWebPlayer from "react-spotify-web-playback/lib";
+import SpotifyPlayer from "react-spotify-web-playback";
+import { Carousel } from "react-responsive-carousel";
+
 function Navigation() {
   const [searchresults, setsearchresults] = useState([]);
   const [token, settoken] = useState("");
-
+  const [musictrack, setmusictrack] = useState([]);
+  //getting the token and keeping it in local storage
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
@@ -40,17 +45,17 @@ function Navigation() {
       },
       params: {
         q: searchkeyword,
-        type: "artist",
-        limit: 15,
+        type: "track,artist",
+        limit: 10,
         market: "ES",
         oofset: 1,
       },
     });
-    console.log(data, "sdfadfasfa/////////////////////////////////////");
 
     setsearchresults(data.data.artists.items);
+    setmusictrack(data.data.tracks.items);
   };
-
+  console.log(musictrack);
   return (
     <div>
       {/* upward navigation */}
@@ -123,13 +128,14 @@ function Navigation() {
           </li>
         </ul>
         <div className="playing">
-          <img
-            src={logo}
-            height="100px"
-            alt="playlogo"
-            className="playinglogo"
-          />
-          <h3 className="songtitle">song title</h3>
+          {/* <div>
+            <img
+              src={logo}
+              height="10px"
+              alt="playlogo"
+              className="playinglogo"
+            />
+          </div> */}
         </div>
       </div>
       <div className="results">
@@ -138,12 +144,11 @@ function Navigation() {
         ) : (
           searchresults.map(({ images, name }) => {
             // for no results
-            console.log(images);
             if (images[1]) {
               return (
                 <div className="search_item">
                   <img
-                    src={images[1].url}
+                    src={images[0].url}
                     alt="search results"
                     height="200px"
                     width="200px"
@@ -152,24 +157,47 @@ function Navigation() {
                 </div>
               );
             } else {
-              return <h3>noresults found</h3>;
+            }
+          })
+        )}
+      </div>
+      <div className="albums">
+        {musictrack.length === 0 ? (
+          <h3>no albums</h3>
+        ) : (
+          musictrack.map(({ album }) => {
+            if (album) {
+              console.log(album.name);
+              return (
+                <div className="album_b0x">
+                  <img
+                    src={album.images[1].url}
+                    alt="album results"
+                    height="130px"
+                    width="130px"
+                  ></img>
+                  <h4>{album.name}</h4>
+                </div>
+              );
             }
           })
         )}
       </div>
 
-      <div className="homepage_defult">
-        {/* <img
+      {/* <div className="homepage_defult">
+        z
+        <img
           src="https://i.scdn.co/image/ab6761610000e5eb0f3bcc7b3d23e7cbece03012"
           width="200px"
           height="180px"
         />
+        <h2>hoho</h2>
         <img
           src="https://i.scdn.co/image/ab6761610000517423c1d2fac850d037709ff548"
           width="200px"
           height="180px"
-        /> */}
-      </div>
+        />
+      </div> */}
     </div>
   );
 }
