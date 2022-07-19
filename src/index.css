@@ -11,8 +11,12 @@ body{
 }
 #root{
   background-color: #202129;
+  width: 500vh;
   height: 100%;
 
+}
+p{
+  color: white;
 }
 /* navigation top */
 .navigation_top{
@@ -20,6 +24,8 @@ body{
   width: 100%;
   display: flex;
   height: 55px;
+  background-color: #202129;
+  z-index: 5;
   border-bottom: 1px solid rgb(255, 0, 183);
   box-shadow: .5px .5px 4px rgb(144, 38, 0);
 }
@@ -110,7 +116,6 @@ body{
   color: azure;
   font-size: larger;
 }
-
 #menu_bars{
  display: none;
 } 
@@ -155,6 +160,8 @@ body{
 .playing{
   display: grid;
   justify-content: center;
+  position: relative;
+  background-color: azure;
   height: 100%;
   border: 1px solid rgb(255, 0, 183);
   box-shadow: .5px .5px 4px rgb(144, 38, 0);
@@ -168,44 +175,68 @@ body{
   
   
 }
-.results{
+.none{
+  display: none;
+}
+.all_search_results{
+  border: solid white ;
+}
+ .results{
   margin-left: 20%;
   position: absolute;
   margin-top: 65px;
   display: flex;
   overflow-x: scroll;
+  scroll-behavior: contain;
   padding: 10px;
-  border: 3px double whitesmoke;
-  width: 80vh;
-  min-width: 690px;
-  justify-content: space-between;
-}
-h3,h4{
+  
+  width: 800px;
+  min-width: 500px;
+  box-shadow: 0px 0px 4px azure;
+  
+} 
+.pl
+h3,h4,h5{
   color: white;
 }
 .search_item{
   padding: 3%;
-  margin: 2%;
+  margin-right: 3%;
   background-color: #191a20;
   width: fit-content;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  height: 350px;
 }
 .search_item:hover{
-  background-color: rgb(70, 64, 64);
+  background-color: black;
 }
+.album_b0x{
+  display: flex;
+  
+}
+
 .albums{
 
     margin-left: 20%;
     position: absolute;
     margin-top: 35%;
     display: flex;
-    overflow-x: scroll;
-    padding: 10px;
-    border: 3px double whitesmoke;
-    width: 100vh;
+    flex-direction: column;
+     padding: 10px;
+    box-shadow: 0px 0px 4px azure;
+    width: fit-content;
+    
     min-width: 690px;
     justify-content: space-between;
   
 }
+::-webkit-scrollbar{ background-color:#202129;}
+::-webkit-scrollbar-thumb{
+  background-color: aliceblue;
+  height: 100px;
+}
+
 .album_b0x{
   margin: 2%;
   

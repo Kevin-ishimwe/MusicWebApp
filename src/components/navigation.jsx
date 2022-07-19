@@ -4,14 +4,18 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "./logo.png.png";
 import { useState } from "react";
+import Slider from "react-slick";
 import SpotifyWebPlayer from "react-spotify-web-playback/lib";
 import SpotifyPlayer from "react-spotify-web-playback";
 import { Carousel } from "react-responsive-carousel";
+import ReactAudioPlayer from "react-audio-player";
 
 function Navigation() {
   const [searchresults, setsearchresults] = useState([]);
   const [token, settoken] = useState("");
   const [musictrack, setmusictrack] = useState([]);
+  const [album_hand, setalbum_hand] = useState("none");
+  const [artist_hand, setartist_hand] = useState("none");
   //getting the token and keeping it in local storage
   useEffect(() => {
     const hash = window.location.hash;
@@ -36,6 +40,13 @@ function Navigation() {
     setsearchkeyword(e.target.value);
   };
   //search handler
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
 
   const search_artist = async (e) => {
     e.preventDefault();
@@ -54,8 +65,11 @@ function Navigation() {
 
     setsearchresults(data.data.artists.items);
     setmusictrack(data.data.tracks.items);
+    setalbum_hand("albums");
+    setartist_hand("results");
   };
   console.log(musictrack);
+
   return (
     <div>
       {/* upward navigation */}
@@ -128,62 +142,67 @@ function Navigation() {
           </li>
         </ul>
         <div className="playing">
-          {/* <div>
-            <img
-              src={logo}
-              height="10px"
-              alt="playlogo"
-              className="playinglogo"
-            />
-          </div> */}
+          <ReactAudioPlayer
+            src="https://p.scdn.co/mp3-preview/19d35a76be790c1b21fb74f463aee5289baf5b68?cid=478e3098f49747468ac64d435963597a"
+            controls
+          />
         </div>
       </div>
-      <div className="results">
-        {searchresults.length === 0 ? (
-          <h3>no results</h3>
-        ) : (
-          searchresults.map(({ images, name }) => {
-            // for no results
-            if (images[1]) {
-              return (
-                <div className="search_item">
-                  <img
-                    src={images[0].url}
-                    alt="search results"
-                    height="200px"
-                    width="200px"
-                  />
-                  <h4>{name}</h4>
-                </div>
-              );
-            } else {
-            }
-          })
-        )}
-      </div>
-      <div className="albums">
-        {musictrack.length === 0 ? (
-          <h3>no albums</h3>
-        ) : (
-          musictrack.map(({ album }) => {
-            if (album) {
-              console.log(album.name);
-              return (
-                <div className="album_b0x">
-                  <img
-                    src={album.images[1].url}
-                    alt="album results"
-                    height="130px"
-                    width="130px"
-                  ></img>
-                  <h4>{album.name}</h4>
-                </div>
-              );
-            }
-          })
-        )}
+
+      <div className=" all_search_results">
+        <div className={artist_hand}>
+          {searchresults.length === 0 ? (
+            <h3>no results</h3>
+          ) : (
+            searchresults.map(({ images, name }) => {
+              // for no results
+              if (images[1]) {
+                return (
+                  <div className="search_item">
+                    <img
+                      src={images[0].url}
+                      alt="search results"
+                      height="200px"
+                      width="200px"
+                    />
+                    <h4>{name}</h4>
+                  </div>
+                );
+              } else {
+              }
+            })
+          )}
+        </div>
+        <div className={album_hand}>
+          {musictrack.length === 0 ? (
+            <h3>no albums</h3>
+          ) : (
+            musictrack.map(({ album, artists, name, e }) => {
+              console.log(artists);
+              if (album) {
+                return (
+                  <div className="album_b0x">
+                    <img
+                      src={album.images[1].url}
+                      alt="album results"
+                      height="100px"
+                      width="100px"
+                    ></img>
+                    <div>
+                      <h5>album:{album.name}</h5>
+                      <h5>{name} </h5>
+
+                      <p>{artists[0].name}</p>
+                    </div>
+                  </div>
+                );
+              }
+            })
+          )}
+        </div>
       </div>
 
+      <div className="tracks_results">musictrack.map(())</div>
       {/* <div className="homepage_defult">
         z
         <img
