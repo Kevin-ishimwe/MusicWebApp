@@ -9,6 +9,7 @@ import SpotifyWebPlayer from "react-spotify-web-playback/lib";
 import SpotifyPlayer from "react-spotify-web-playback";
 import { Carousel } from "react-responsive-carousel";
 import ReactAudioPlayer from "react-audio-player";
+import { json } from "express";
 
 function Navigation() {
   const [searchresults, setsearchresults] = useState([]);
@@ -16,7 +17,9 @@ function Navigation() {
   const [musictrack, setmusictrack] = useState([]);
   const [album_hand, setalbum_hand] = useState("none");
   const [artist_hand, setartist_hand] = useState("none");
+  const [preview_track_url, setpreview_track_url] = useState("");
   //getting the token and keeping it in local storage
+
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
@@ -29,7 +32,6 @@ function Navigation() {
     }
     settoken(token);
   }, []);
-
   localStorage.setItem("token", token);
   //search theme button
   const [input, setinput] = useState("top_input2");
@@ -40,13 +42,6 @@ function Navigation() {
     setsearchkeyword(e.target.value);
   };
   //search handler
-  var settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
 
   const search_artist = async (e) => {
     e.preventDefault();
@@ -68,6 +63,7 @@ function Navigation() {
     setalbum_hand("albums");
     setartist_hand("results");
   };
+  //prewiew song on click
   console.log(musictrack);
 
   return (
@@ -142,10 +138,17 @@ function Navigation() {
           </li>
         </ul>
         <div className="playing">
-          <ReactAudioPlayer
-            src="https://p.scdn.co/mp3-preview/19d35a76be790c1b21fb74f463aee5289baf5b68?cid=478e3098f49747468ac64d435963597a"
-            controls
-          />
+          {/*
+          
+          apparently this is for only premium users
+          so im gonna let a person a small 30 second preview and be done with it 
+          <SpotifyPlayer
+            uris={[""]}
+            size={size}
+            view={view}
+            theme={theme}
+            token="BQDY6TVrVRCkyx_ukuKvkpj1tbPWpWe2DTtyt06YBnlUh04gtO30kaEO5zWCV5PPllXwKsDih0TYgsw1RpZBR7daIqeFtQuPKj7_9QfCcS8NiCWsr26a9CmqXyYkFNrgdowxwi6zkB9DGG1fyWPoPleAldZFVfjNQAq9gg6diHaldGDSzldmJx4OKbljTiOujAeJBBd6DnwBgxk3Ou87zXKsLyG6pQ"
+          /> */}
         </div>
       </div>
 
@@ -177,24 +180,34 @@ function Navigation() {
           {musictrack.length === 0 ? (
             <h3>no albums</h3>
           ) : (
-            musictrack.map(({ album, artists, name, e }) => {
-              console.log(artists);
+            musictrack.map(({ album, artists, name, preview_url }) => {
               if (album) {
                 return (
-                  <div className="album_b0x">
-                    <img
-                      src={album.images[1].url}
-                      alt="album results"
-                      height="100px"
-                      width="100px"
-                    ></img>
-                    <div>
-                      <h5>album:{album.name}</h5>
-                      <h5>{name} </h5>
+                  <React.Fragment>
+                    <button
+                      onClick={setpreview_track_url(
+                        JSON.stringify(preview_url)
+                      )}
+                    >
+                      <div className="album_b0x">
+                        <img
+                          src={album.images[1].url}
+                          alt="album results"
+                          height="100px"
+                          width="100px"
+                        ></img>
+                        <div>
+                          <h5>album:{album.name}</h5>
+                          <h5>{name} </h5>
 
-                      <p>{artists[0].name}</p>
-                    </div>
-                  </div>
+                          <p>{artists[0].name}</p>
+                        </div>
+                      </div>
+                    </button>
+                    <audio controls>
+                      <source src={preview_track_url} />
+                    </audio>
+                  </React.Fragment>
                 );
               }
             })

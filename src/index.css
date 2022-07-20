@@ -11,7 +11,6 @@ body{
 }
 #root{
   background-color: #202129;
-  width: 500vh;
   height: 100%;
 
 }
@@ -89,6 +88,7 @@ p{
   to{width: 25%;}
   
 }
+.playing
 .nav_mid_ul{
   margin-top: 0.5%;
   width: 80%;
@@ -158,17 +158,15 @@ p{
 }
 /* lower playing track */
 .playing{
-  display: grid;
-  justify-content: center;
-  position: relative;
-  background-color: azure;
-  height: 100%;
-  border: 1px solid rgb(255, 0, 183);
-  box-shadow: .5px .5px 4px rgb(144, 38, 0);
+ 
+  padding: auto;
 }
 .playinglogo{
   /* background-color: white; */
   border-radius: 50%;
+}
+#mx_player{
+  margin-left:400px;
 }
 .content{
   min-height: 200vh;
