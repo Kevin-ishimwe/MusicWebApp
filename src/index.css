@@ -239,6 +239,15 @@ h3,h4,h5{
   margin: 2%;
   
 }
+.home_content{
+  margin-top: 70px;
+  margin-left:20%;
+  
+}
+.home_content_item{
+  display: flex;
+  margin: 2%;
+}
 /* media queries for responsiveness tablets
 -tablets 900- */
  @media screen and (max-width:900px) {

@@ -4,12 +4,6 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "./logo.png.png";
 import { useState } from "react";
-import Slider from "react-slick";
-import SpotifyWebPlayer from "react-spotify-web-playback/lib";
-import SpotifyPlayer from "react-spotify-web-playback";
-import { Carousel } from "react-responsive-carousel";
-import ReactAudioPlayer from "react-audio-player";
-import { json } from "express";
 
 function Navigation() {
   const [searchresults, setsearchresults] = useState([]);
@@ -17,7 +11,8 @@ function Navigation() {
   const [musictrack, setmusictrack] = useState([]);
   const [album_hand, setalbum_hand] = useState("none");
   const [artist_hand, setartist_hand] = useState("none");
-  const [preview_track_url, setpreview_track_url] = useState("");
+  const [saved_in_account, setsaved_in_account] = useState([]);
+
   //getting the token and keeping it in local storage
 
   useEffect(() => {
@@ -53,8 +48,7 @@ function Navigation() {
         q: searchkeyword,
         type: "track,artist",
         limit: 10,
-        market: "ES",
-        oofset: 1,
+        offset: 0,
       },
     });
 
@@ -63,11 +57,27 @@ function Navigation() {
     setalbum_hand("albums");
     setartist_hand("results");
   };
+  //saved tracks
+  const saved_tracks = async (e) => {
+    e.preventDefault();
+    const fav_tracks = await axios.get("https://api.spotify.com/v1/me/tracks", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      params: {
+        limit: 10,
+        market: "AD",
+      },
+    });
+    setsaved_in_account(fav_tracks.data.items);
+  };
+  console.log("these are my favs", saved_in_account);
+  //prewiew song on click
   //prewiew song on click
   console.log(musictrack);
 
   return (
-    <div>
+    <div onLoad={saved_tracks}>
       {/* upward navigation */}
       <div className="navigation_top">
         <div className="navigation_top_left">
@@ -180,56 +190,44 @@ function Navigation() {
           {musictrack.length === 0 ? (
             <h3>no albums</h3>
           ) : (
-            musictrack.map(({ album, artists, name, preview_url }) => {
+            musictrack.map(({ album, artists, name }) => {
               if (album) {
                 return (
-                  <React.Fragment>
-                    <button
-                      onClick={setpreview_track_url(
-                        JSON.stringify(preview_url)
-                      )}
-                    >
-                      <div className="album_b0x">
-                        <img
-                          src={album.images[1].url}
-                          alt="album results"
-                          height="100px"
-                          width="100px"
-                        ></img>
-                        <div>
-                          <h5>album:{album.name}</h5>
-                          <h5>{name} </h5>
+                  <div className="album_b0x">
+                    <img
+                      src={album.images[1].url}
+                      alt="album results"
+                      height="100px"
+                      width="100px"
+                    ></img>
+                    <div>
+                      <h5>album:{album.name}</h5>
+                      <h5>{name} </h5>
 
-                          <p>{artists[0].name}</p>
-                        </div>
-                      </div>
-                    </button>
-                    <audio controls>
-                      <source src={preview_track_url} />
-                    </audio>
-                  </React.Fragment>
+                      <p>{artists[0].name}</p>
+                    </div>
+                  </div>
                 );
               }
             })
           )}
         </div>
       </div>
-
-      <div className="tracks_results">musictrack.map(())</div>
-      {/* <div className="homepage_defult">
-        z
-        <img
-          src="https://i.scdn.co/image/ab6761610000e5eb0f3bcc7b3d23e7cbece03012"
-          width="200px"
-          height="180px"
-        />
-        <h2>hoho</h2>
-        <img
-          src="https://i.scdn.co/image/ab6761610000517423c1d2fac850d037709ff548"
-          width="200px"
-          height="180px"
-        />
-      </div> */}
+      <div className="home_content">
+        {saved_in_account.map(({ track }) => {
+          return (
+            <div className="home_content_item">
+              <img
+                src={track.album.images[1].url}
+                alt="can't displat"
+                height="100"
+              />
+              <h4>{track.name}</h4>
+              {/* <h4>{track.artist[0].name}</h4> */}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
