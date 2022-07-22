@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
 import logo from "./logo.png.png";
 import { useState } from "react";
 
@@ -12,6 +12,15 @@ function Navigation() {
   const [album_hand, setalbum_hand] = useState("none");
   const [artist_hand, setartist_hand] = useState("none");
   const [saved_in_account, setsaved_in_account] = useState([]);
+  const [home_content, sethome_content] = useState("home_content");
+  const [listen_track, setlisten_track] = useState(
+    "https://p.scdn.co/mp3-preview/8b1004de6f678081564f9d14e1725f33ee4596db?cid=478e3098f49747468ac64d435963597a"
+  );
+  const [track_name, settrack_name] = useState("wow");
+  const [track_playing_img, settrack_playing_img] = useState(
+    "https://i.scdn.co/image/ab67616d00001e02157fcd1d1770bbc96c326544"
+  );
+  const [user_info, setuser_info] = useState([]);
 
   //getting the token and keeping it in local storage
 
@@ -29,7 +38,6 @@ function Navigation() {
   }, []);
   localStorage.setItem("token", token);
   //search theme button
-  const [input, setinput] = useState("top_input2");
   //search keyword getter
   const [searchkeyword, setsearchkeyword] = useState("");
   const searchkeywordgetter = (e) => {
@@ -37,7 +45,7 @@ function Navigation() {
     setsearchkeyword(e.target.value);
   };
   //search handler
-
+  //API FOR SEARCH
   const search_artist = async (e) => {
     e.preventDefault();
     const data = await axios.get("https://api.spotify.com/v1/search", {
@@ -56,8 +64,9 @@ function Navigation() {
     setmusictrack(data.data.tracks.items);
     setalbum_hand("albums");
     setartist_hand("results");
+    sethome_content("home_content_none");
   };
-  //saved tracks
+  //API CALL FOR saved tracks
   const saved_tracks = async (e) => {
     e.preventDefault();
     const fav_tracks = await axios.get("https://api.spotify.com/v1/me/tracks", {
@@ -65,21 +74,31 @@ function Navigation() {
         Authorization: `Bearer ${token}`,
       },
       params: {
-        limit: 10,
+        limit: 50,
         market: "AD",
       },
     });
     setsaved_in_account(fav_tracks.data.items);
   };
-  console.log("these are my favs", saved_in_account);
-  //prewiew song on click
-  //prewiew song on click
-  console.log(musictrack);
-
+  //API CALL FOR user data
+  const user_data = async (e) => {
+    e.preventDefault();
+    const my_data = await axios.get("https://api.spotify.com/v1/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setuser_info(my_data.data);
+  };
+  console.log(user_info);
+  // console.log("these are my favs", saved_in_account);
+  // //prewiew song on click
+  // //prewiew song on click
+  // console.log(musictrack);
   return (
     <div onLoad={saved_tracks}>
       {/* upward navigation */}
-      <div className="navigation_top">
+      <div className="navigation_top" onLoad={user_data}>
         <div className="navigation_top_left">
           <img src={logo} alt="logo" height="50vh" width="70vh" id="logo"></img>
           <h1 className="nav_top_left_header">MUSIX</h1>
@@ -99,7 +118,7 @@ function Navigation() {
               <input
                 type="text"
                 placeholder="search Artist,track or podcast"
-                id={input}
+                id="top_input2"
                 onInput={searchkeywordgetter}
               ></input>
               <i class="fa fa-search" id="search" onClick={search_artist}></i>
@@ -110,8 +129,15 @@ function Navigation() {
             <div className="nav_right_toggle">
               <i className="far fa-envelope" id="nav_top_right_icons"></i>
               <i className="fas fa-shopping-cart" id="nav_top_right_icons"></i>
-              <a className="mid_link_log">LOGIN</a>
-              <i className="fas fa-plus-square" id="nav_top_right_icons"></i>
+              <h5 id="user_name">
+                {user_info.display_name ? user_info.display_name : "login"}
+              </h5>
+              <i
+                className={
+                  user_info.display_name ? "fa fa-user" : "fas fa-plus-square"
+                }
+                id="user_icon"
+              ></i>
             </div>
           </div>
         </div>
@@ -148,17 +174,7 @@ function Navigation() {
           </li>
         </ul>
         <div className="playing">
-          {/*
-          
-          apparently this is for only premium users
-          so im gonna let a person a small 30 second preview and be done with it 
-          <SpotifyPlayer
-            uris={[""]}
-            size={size}
-            view={view}
-            theme={theme}
-            token="BQDY6TVrVRCkyx_ukuKvkpj1tbPWpWe2DTtyt06YBnlUh04gtO30kaEO5zWCV5PPllXwKsDih0TYgsw1RpZBR7daIqeFtQuPKj7_9QfCcS8NiCWsr26a9CmqXyYkFNrgdowxwi6zkB9DGG1fyWPoPleAldZFVfjNQAq9gg6diHaldGDSzldmJx4OKbljTiOujAeJBBd6DnwBgxk3Ou87zXKsLyG6pQ"
-          /> */}
+          <img src={track_playing_img} id="song_cover" />
         </div>
       </div>
 
@@ -168,7 +184,6 @@ function Navigation() {
             <h3>no results</h3>
           ) : (
             searchresults.map(({ images, name }) => {
-              // for no results
               if (images[1]) {
                 return (
                   <div className="search_item">
@@ -213,20 +228,37 @@ function Navigation() {
           )}
         </div>
       </div>
-      <div className="home_content">
+      <div className={home_content}>
         {saved_in_account.map(({ track }) => {
+          const listen_handler = () => {
+            setlisten_track(track.preview_url);
+            settrack_name(track.name);
+            settrack_playing_img(track.album.images[1].url);
+          };
+
           return (
-            <div className="home_content_item">
+            <div className="home_content_item" onClick={listen_handler}>
               <img
                 src={track.album.images[1].url}
                 alt="can't displat"
                 height="100"
               />
-              <h4>{track.name}</h4>
-              {/* <h4>{track.artist[0].name}</h4> */}
+              <div>
+                <h5>{track.name}</h5>
+                <br></br>
+                <p>{track.artists[0].name}</p>
+              </div>
             </div>
           );
         })}
+      </div>
+      <div className="player">
+        <div className="track_info">
+          <h5>{track_name}</h5>
+        </div>
+        <audio controls src={listen_track}>
+          can't play shit
+        </audio>
       </div>
     </div>
   );
