@@ -105,15 +105,17 @@ function Navigation() {
         </div>
         <div className="navigation_top_middle">
           <ul className="nav_mid_ul">
-            <li className="nav_mid_li">
-              <a className="mid_links">Profile</a>
-            </li>
-            <li className="nav_mid_li">
-              <a className="mid_links">About</a>
-            </li>
-            <li className="nav_mid_li">
-              <a className="mid_links">Contacts</a>
-            </li>
+            <div className="optional">
+              <li className="nav_mid_li">
+                <a className="mid_links">Profile</a>
+              </li>
+              <li className="nav_mid_li">
+                <a className="mid_links">About</a>
+              </li>
+              <li className="nav_mid_li">
+                <a className="mid_links">Contacts</a>
+              </li>
+            </div>
             <li className="nav_mid_li">
               <input
                 type="text"
