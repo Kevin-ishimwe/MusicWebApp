@@ -258,7 +258,7 @@ function Navigation() {
         <div className="track_info">
           <h5>{track_name}</h5>
         </div>
-        <audio controls src={listen_track}>
+        <audio controls src={listen_track} autoPlay>
           can't play shit
         </audio>
       </div>

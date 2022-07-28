@@ -261,12 +261,10 @@ h3,h4,h5{
   
 }
 .home_content{
-  position: absolute;
-  float: right;
+
   margin-top: 55px;
   margin-left:17%;
-  display: grid;
-  grid-template-columns: 45% 45%;
+  display: flex;
   left: 20px;
   min-width: 650px;
   flex-wrap: wrap;
@@ -284,8 +282,7 @@ h3,h4,h5{
 }
 .home_content_item{
   display: flex;
-  
-  overflow: hidden;
+  width: 40%;
   background-color:#191a20;
   margin: 2% 4%;
 }
@@ -311,10 +308,9 @@ h3,h4,h5{
   box-shadow: .5px .5px 4px rgb(144, 38, 0);
 }
 audio{
-  background-color: #131317;
   font-size: xx-large;
-  padding: 10px;
-  margin-top: 0%;
+  padding: 2%;
+  bottom: 15%;
   width:100%;
   
   
@@ -326,13 +322,31 @@ audio{
 
   .home_content{
     display: grid;
-    left: 100px;
+    left: 120px;
     grid-template-columns: 100%;
     background-color: #202129;
     
   }
   .home_content_item{
-    margin: 2% 0%;
+    margin: 2% 0%; 
+    width: 50%;
   }
   
+}
+/* for phones and small devices */
+@media screen and (max-width:550px) {
+  .side_navigation{
+    display: none;
+  }
+  .home_content{
+    left: 2px;
+    margin-left: 2%;
+  }
+  .home_content_item{
+    margin: 2% 0%; 
+    width: 41vh;
+  }
+  h4{
+    font-size: large;
+  }
 }
