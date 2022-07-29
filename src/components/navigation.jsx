@@ -107,9 +107,7 @@ function Navigation() {
               <li className="nav_mid_li">
                 <a className="mid_links">Profile</a>
               </li>
-              <li className="nav_mid_li">
-                <a className="mid_links">About</a>
-              </li>
+
               <li className="nav_mid_li">
                 <a className="mid_links">Contacts</a>
               </li>
