@@ -72,8 +72,8 @@ p{
 }
 #search{
   margin-top: 4%;
-  color: azure;
-  margin-left: 4%;
+  color: black;
+  transform: translateX(-55px);
   display: inline;
   position: absolute;
   animation: sizen 2s 1;
@@ -82,11 +82,11 @@ p{
 
 
 #top_input2{
-  width: 30vh;
-  padding: .7%;
-  padding-left: 2%;
-  font-size: small;
-  border-radius: 50px;
+  margin: 2% 10%;
+  width: 120%;
+  padding: 1.5% 1%;
+  font-size: medium;
+  border-radius: 10px;
   color: black;
   border: none;
   background-color: azure;
@@ -95,7 +95,7 @@ p{
 @keyframes sizen {
   0%{width: 0%;opacity: 0;}
   70%{width: 0%;opacity: 0;}
-  100%{width: 30vh;opacity: 1;}
+  100%{opacity: 1;}
   
 }
 
@@ -113,7 +113,8 @@ p{
   width: 85%;
 }
 #navigation_top_right{
-  margin-top: 0.5%;
+  margin-top: 0.0%;
+  
   margin-right: 5%;
   
 }
@@ -318,7 +319,7 @@ audio{
 /* media queries for responsiveness tablets
 -tablets 900- */
 
-@media screen and (max-width:770px) {
+@media screen and (max-width:870px) {
 
   .home_content{
     display: grid;
@@ -331,7 +332,30 @@ audio{
     margin: 2% 0%; 
     width: 50%;
   }
-  
+  #menu_bars{
+    float: right;
+    margin: 30% 0%;
+    display: grid;
+    color: azure;
+    font-size: x-large;
+   } 
+  .nav_right_toggle{
+    display: none;
+  }
+  input{
+    width: 20%;
+  }
+  #top_input2{
+    margin: 2% 10%;
+    width: 90%;
+    padding: 1.5% 1%;
+    font-size: medium;
+    border-radius: 10px;
+    color: black;
+    border: none;
+    background-color: azure;
+    animation: sizen 4s 1;
+  }
 }
 /* for phones and small devices */
 @media screen and (max-width:550px) {
@@ -348,5 +372,8 @@ audio{
   }
   h4{
     font-size: large;
+  }
+  .optional{
+    display: none;
   }
 }

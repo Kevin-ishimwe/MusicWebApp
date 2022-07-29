@@ -90,11 +90,9 @@ function Navigation() {
     });
     setuser_info(my_data.data);
   };
-  console.log(user_info);
   // console.log("these are my favs", saved_in_account);
   // //prewiew song on click
   // //prewiew song on click
-  // console.log(musictrack);
   return (
     <div onLoad={saved_tracks}>
       {/* upward navigation */}
@@ -119,7 +117,7 @@ function Navigation() {
             <li className="nav_mid_li">
               <input
                 type="text"
-                placeholder="search Artist,track or podcast"
+                placeholder=" search Artist,track"
                 id="top_input2"
                 onInput={searchkeywordgetter}
               ></input>
@@ -258,7 +256,7 @@ function Navigation() {
         <div className="track_info">
           <h5>{track_name}</h5>
         </div>
-        <audio controls src={listen_track} autoPlay>
+        <audio controls src={listen_track}>
           can't play shit
         </audio>
       </div>
