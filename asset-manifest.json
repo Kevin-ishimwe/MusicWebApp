@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/my-musicweb-app/static/css/main.1b1f2533.chunk.css",
+    "main.js": "/my-musicweb-app/static/js/main.bd1e64ea.chunk.js",
+    "main.js.map": "/my-musicweb-app/static/js/main.bd1e64ea.chunk.js.map",
+    "runtime-main.js": "/my-musicweb-app/static/js/runtime-main.d164038f.js",
+    "runtime-main.js.map": "/my-musicweb-app/static/js/runtime-main.d164038f.js.map",
+    "static/css/2.cbedb215.chunk.css": "/my-musicweb-app/static/css/2.cbedb215.chunk.css",
+    "static/js/2.81ca5fdb.chunk.js": "/my-musicweb-app/static/js/2.81ca5fdb.chunk.js",
+    "static/js/2.81ca5fdb.chunk.js.map": "/my-musicweb-app/static/js/2.81ca5fdb.chunk.js.map",
+    "index.html": "/my-musicweb-app/index.html",
+    "static/css/2.cbedb215.chunk.css.map": "/my-musicweb-app/static/css/2.cbedb215.chunk.css.map",
+    "static/css/main.1b1f2533.chunk.css.map": "/my-musicweb-app/static/css/main.1b1f2533.chunk.css.map",
+    "static/js/2.81ca5fdb.chunk.js.LICENSE.txt": "/my-musicweb-app/static/js/2.81ca5fdb.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.d164038f.js",
+    "static/css/2.cbedb215.chunk.css",
+    "static/js/2.81ca5fdb.chunk.js",
+    "static/css/main.1b1f2533.chunk.css",
+    "static/js/main.bd1e64ea.chunk.js"
+  ]
+}
