@@ -6,6 +6,7 @@ import logo from "./logo.png.png";
 import { useState } from "react";
 
 function Navigation() {
+  const [play, setplay] = useState(false);
   const [searchresults, setsearchresults] = useState([]);
   const [token, settoken] = useState("");
   const [musictrack, setmusictrack] = useState([]);
@@ -66,6 +67,7 @@ function Navigation() {
     setartist_hand("results");
     sethome_content("home_content_none");
   };
+
   //API CALL FOR saved tracks
   const saved_tracks = async (e) => {
     e.preventDefault();
@@ -89,6 +91,12 @@ function Navigation() {
       },
     });
     setuser_info(my_data.data);
+  };
+  const listen_handler = (track) => {
+    setplay(true);
+    setlisten_track(track.preview_url);
+    settrack_name(track.name);
+    settrack_playing_img(track.album.images[1].url);
   };
   // console.log("these are my favs", saved_in_account);
   // //prewiew song on click
@@ -119,7 +127,11 @@ function Navigation() {
                 id="top_input2"
                 onInput={searchkeywordgetter}
               ></input>
-              <i class="fa fa-search" id="search" onClick={search_artist}></i>
+              <i
+                className="fa fa-search"
+                id="search"
+                onClick={search_artist}
+              ></i>
             </li>
           </ul>
           <div id="navigation_top_right">
@@ -144,31 +156,35 @@ function Navigation() {
       <div className="side_navigation">
         <ul className="nav_side_ul">
           <li className="nav_side_li">
-            <i class="fa-solid fa-house" id="nav_side_icons"></i>Home
-          </li>
-          <li className="nav_side_li">
-            <i class="fa fa-user" aria-hidden="true" id="nav_side_icons"></i>
-            Artist
-          </li>
-          <li className="nav_side_li">
-            <i class="fa-solid fa-music" id="nav_side_icons"></i>Releases
+            <i className="fa-solid fa-house" id="nav_side_icons"></i>Home
           </li>
           <li className="nav_side_li">
             <i
-              class="fa fa-calendar"
+              className="fa fa-user"
+              aria-hidden="true"
+              id="nav_side_icons"
+            ></i>
+            Artist
+          </li>
+          <li className="nav_side_li">
+            <i className="fa-solid fa-music" id="nav_side_icons"></i>Releases
+          </li>
+          <li className="nav_side_li">
+            <i
+              className="fa fa-calendar"
               aria-hidden="true"
               id="nav_side_icons"
             ></i>
             Events
           </li>
           <li className="nav_side_li">
-            <i class="fa-solid fa-podcast" id="nav_side_icons"></i>Podcasts
+            <i className="fa-solid fa-podcast" id="nav_side_icons"></i>Podcasts
           </li>
           <li className="nav_side_li">
-            <i class="fas fa-shopping-cart" id="nav_side_icons"></i>Store
+            <i className="fas fa-shopping-cart" id="nav_side_icons"></i>Store
           </li>
           <li className="nav_side_li">
-            <i class="fas fa-newspaper" id="nav_side_icons"></i>News
+            <i className="fas fa-newspaper" id="nav_side_icons"></i>News
           </li>
         </ul>
         <div className="playing">
@@ -228,14 +244,13 @@ function Navigation() {
       </div>
       <div className={home_content}>
         {saved_in_account.map(({ track }) => {
-          const listen_handler = () => {
-            setlisten_track(track.preview_url);
-            settrack_name(track.name);
-            settrack_playing_img(track.album.images[1].url);
-          };
-
           return (
-            <div className="home_content_item" onClick={listen_handler}>
+            <div
+              className="home_content_item"
+              onClick={() => {
+                listen_handler(track);
+              }}
+            >
               <img
                 src={track.album.images[1].url}
                 alt="can't displat"
@@ -254,8 +269,23 @@ function Navigation() {
         <div className="track_info">
           <h5>{track_name}</h5>
         </div>
-        <audio controls src={listen_track}>
-          can't play shit
+        <audio
+          controls
+          src={listen_track}
+          autoPlay={play}
+          onPlay={(e) => {
+            if (
+              track_playing_img ===
+              "https://i.scdn.co/image/ab67616d00001e02157fcd1d1770bbc96c326544"
+            ) {
+              e.target.volume = 0.2;
+            }
+          }}
+          onPause={() => {
+            
+          }}
+        >
+          can't play this song
         </audio>
       </div>
     </div>
