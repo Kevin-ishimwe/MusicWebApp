@@ -107,13 +107,15 @@ p {
 
 .nav_mid_ul {
   display: flex;
-  margin-top: 0.5%;
+  margin: 0.5% 2%;
   width: 80%;
+  justify-content: left;
 }
 .navigation_top_middle {
   padding: 0%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 85%;
 }
 #navigation_top_right {
@@ -178,6 +180,7 @@ p {
 }
 /* lower playing track */
 .playing {
+  
   border-top: 1px solid rgb(255, 0, 183);
   box-shadow: 0.5px 0.5px 2px rgb(144, 38, 0);
 }
@@ -193,7 +196,8 @@ p {
 }
 #song_cover {
   width: 100%;
-  margin-top: 20%;
+  
+  position: absolute;
 }
 
 .none {
@@ -391,7 +395,7 @@ audio {
   }
   #top_input2 {
     margin: 2.5% 10%;
-    width: 80%;
+    width: 110%;
     padding: 1.5% 1%;
     font-size: medium;
     border-radius: 10px;

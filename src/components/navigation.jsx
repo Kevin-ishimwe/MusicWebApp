@@ -1,9 +1,10 @@
 import React from "react";
 import axios from "axios";
 import { useEffect } from "react";
-// import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "./logo.png.png";
 import { useState } from "react";
+import Sidebar from "./sidebar";
 
 function Navigation() {
   const [play, setplay] = useState(false);
@@ -23,21 +24,30 @@ function Navigation() {
   );
   const [user_info, setuser_info] = useState([]);
 
+  const navigate = useNavigate();
+
   //getting the token and keeping it in local storage
 
   useEffect(() => {
     const hash = window.location.hash;
-    let token = window.localStorage.getItem("token");
-    if (!token && hash) {
-      token = hash
+    let accessToken = localStorage.getItem("token");
+    if (hash.length > 0) {
+      accessToken = hash
         .substring(1)
         .split("&")
         .find((elem) => elem.startsWith("access_token"))
         .split("=")[1];
+
+      settoken(accessToken);
+      console.log("Access token______________________", token);
+      localStorage.setItem("token", accessToken);
+    } else if (!accessToken && !hash) {
+      navigate("/");
+    } else {
+      settoken(accessToken);
     }
-    settoken(token);
-  }, []);
-  localStorage.setItem("token", token);
+    saved_tracks();
+  }, [token]);
   //search theme button
   //search keyword getter
   const [searchkeyword, setsearchkeyword] = useState("");
@@ -69,8 +79,8 @@ function Navigation() {
   };
 
   //API CALL FOR saved tracks
-  const saved_tracks = async (e) => {
-    e.preventDefault();
+  const saved_tracks = async () => {
+    console.log(`Bearer ${token}`);
     const fav_tracks = await axios.get("https://api.spotify.com/v1/me/tracks", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -80,6 +90,7 @@ function Navigation() {
         market: "AD",
       },
     });
+
     setsaved_in_account(fav_tracks.data.items);
   };
   //API CALL FOR user data
@@ -102,7 +113,7 @@ function Navigation() {
   // //prewiew song on click
   // //prewiew song on click
   return (
-    <div onLoad={saved_tracks}>
+    <div>
       {/* upward navigation */}
       <div className="navigation_top" onLoad={user_data}>
         <div className="navigation_top_left">
@@ -152,45 +163,7 @@ function Navigation() {
           </div>
         </div>
       </div>
-      {/* side navigation bar */}
-      <div className="side_navigation">
-        <ul className="nav_side_ul">
-          <li className="nav_side_li">
-            <i className="fa-solid fa-house" id="nav_side_icons"></i>Home
-          </li>
-          <li className="nav_side_li">
-            <i
-              className="fa fa-user"
-              aria-hidden="true"
-              id="nav_side_icons"
-            ></i>
-            Artist
-          </li>
-          <li className="nav_side_li">
-            <i className="fa-solid fa-music" id="nav_side_icons"></i>Releases
-          </li>
-          <li className="nav_side_li">
-            <i
-              className="fa fa-calendar"
-              aria-hidden="true"
-              id="nav_side_icons"
-            ></i>
-            Events
-          </li>
-          <li className="nav_side_li">
-            <i className="fa-solid fa-podcast" id="nav_side_icons"></i>Podcasts
-          </li>
-          <li className="nav_side_li">
-            <i className="fas fa-shopping-cart" id="nav_side_icons"></i>Store
-          </li>
-          <li className="nav_side_li">
-            <i className="fas fa-newspaper" id="nav_side_icons"></i>News
-          </li>
-        </ul>
-        <div className="playing">
-          <img src={track_playing_img} id="song_cover" />
-        </div>
-      </div>
+      <Sidebar playing_img={track_playing_img} />
 
       <div className=" all_search_results">
         <div className={artist_hand}>
@@ -256,10 +229,9 @@ function Navigation() {
                 alt="can't displat"
                 height="100"
               />
-              <div>
+              <div className="song_card">
                 <h5>{track.name}</h5>
-                <br></br>
-                <p>{track.artists[0].name}</p>
+                <p style={{ margin: "2% 0%" }}>{track.artists[0].name}</p>
               </div>
             </div>
           );
@@ -281,9 +253,7 @@ function Navigation() {
               e.target.volume = 0.2;
             }
           }}
-          onPause={() => {
-            
-          }}
+          onPause={() => {}}
         >
           can't play this song
         </audio>

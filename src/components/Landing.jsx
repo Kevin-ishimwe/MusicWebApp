@@ -1,5 +1,4 @@
 import React from "react";
-import doggy from "../assets/doggy.png";
 import { BsGithub, BsInstagram } from "react-icons/bs";
 import { FaLinkedinIn } from "react-icons/fa";
 

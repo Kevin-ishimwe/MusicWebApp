@@ -55,6 +55,12 @@
   background-color: white;
   color: #ff00b7;
 }
+.song_card {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+}
 @media screen and (max-width: 768px) {
   .redirect {
     font-size: large;
